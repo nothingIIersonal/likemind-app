@@ -1,0 +1,47 @@
+services:
+  frontend:
+    image: web-view/dev
+    restart: always
+    environment:
+      - PORT=3000
+      - REACT_APP_API_URL=http://localhost:3001/api/v1
+      - REACT_APP_URL_FOR_CORS=http://localhost:3001
+    ports:
+      - 3000:3000
+    build:
+      context: web-view
+      dockerfile: Dockerfile
+
+  backend:
+    image: backend/dev
+    restart: always
+    environment:
+      - BACKEND_PORT=3001
+      - API_URL=api/v1
+      - URL_FOR_CORS=http://localhost:3000
+      - DB_HOST=database
+      - DB_PORT=3306
+      - DB_USER=root
+      - DB_PASS=dev_test_pass
+      - DB_NAME=likemind
+      - JWT_SECRET=horoshee4no
+      - JWT_EXPIRE=5m
+      - JWT_EXPIRE_RAW=5
+    ports:
+      - 3001:3001
+    build:
+      context: backend
+      dockerfile: Dockerfile
+
+  database:
+    image: db/dev
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      - MYSQL_PORT=3306
+      - MYSQL_ROOT_PASSWORD=dev_test_pass
+    ports:
+      - 3306:3306
+    build:
+      context: db
+      dockerfile: Dockerfile
