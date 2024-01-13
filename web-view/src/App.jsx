@@ -5,6 +5,7 @@ import { Index } from "./pages/Index";
 import { Register } from "./pages/Register";
 import { Login } from "./pages/Login";
 import { Profile } from "./pages/Profile";
+import { Map } from "./pages/Map";
 import { Routes, Route } from "react-router-dom";
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
           <Route path="profile" element={<Profile />} />
+          <Route path="map" element={<Map />} />
           <Route path="*" element={<Index />} />
         </Route>
       </Routes>

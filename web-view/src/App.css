@@ -167,6 +167,11 @@ main {
   width: 100%;
 }
 
+/* Map-page */
+.map-container .default-container {
+  height: 100svh;
+}
+
 /* Additional */
 hr {
   border: none;
