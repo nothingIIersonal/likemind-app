@@ -41,13 +41,38 @@ function Profile() {
 
   return (
     <>
-      <div>
-        <h2>Profile</h2>
-        <p>Hello, {username}</p>
-        <p>Your email: {email}</p>
-        <button onClick={handleLogout} className="link-click">
-          Logout
-        </button>
+      <div className="profile-container">
+        <div className="default-container">
+          <h2>Profile</h2>
+          <div className="default-data-container">
+            <div className="profile-data">
+              <span className="username">
+                <p>Username:</p>
+              </span>
+              <span className="username-val">{username}</span>
+              <span className="email">
+                <p>EMail:</p>
+              </span>
+              <span className="email-val">{email}</span>
+              <span className="firstname">
+                <p>First name:</p>
+              </span>
+              <span className="firstname-val">{email}</span>
+              <span className="about">
+                <p>About:</p>
+              </span>
+              <span className="about-val">{email}</span>
+            </div>
+            <div className="profile-buttons">
+              <span className="logout-btn">
+                <button onClick={handleLogout}>Logout</button>
+              </span>
+              <span className="edit-btn">
+                <button onClick={handleLogout}>Edit</button>
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );

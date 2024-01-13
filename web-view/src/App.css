@@ -58,41 +58,50 @@ main {
   padding-top: 25%;
 }
 
-/* Auth/register form */
+/* Auth/register form and default-container */
 .auth-form-container,
-.auth-form {
+.auth-form,
+.default-container,
+.default-data-container {
   display: flex;
   flex-direction: column;
   padding: 2rem;
 }
-.auth-form-container {
+.auth-form-container,
+.default-container {
   background-color: rgba(0, 0, 0, 0.3);
   background-blend-mode: multiply;
 }
-.auth-form {
+.auth-form,
+.default-data-container {
   background-color: rgba(0, 0, 0, 0.3);
   background-image: linear-gradient(#55555550, #e7e6e620, #00000050);
   background-blend-mode: multiply;
   border-radius: 20px;
 }
 @media screen and (min-width: 576px) {
-  .auth-form-container {
+  .auth-form-container,
+  .default-container {
     border: 1px solid white;
     border-radius: 20px;
-    margin: 5rem;
+    margin-left: 10%;
+    margin-right: 10%;
   }
 }
-.auth-form label {
+.auth-form label,
+.default-data-container label {
   text-align: left;
   padding: 0.25rem 0;
 }
-.auth-form input {
+.auth-form input,
+.default-data-container input {
   margin: 0.5rem 0;
   padding: 1rem;
   border: none;
   border-radius: 10px;
 }
-.auth-form button {
+.auth-form button,
+.default-data-container button {
   border: none;
   background-color: white;
   padding: 20px;
@@ -101,8 +110,61 @@ main {
   cursor: pointer;
   color: #000000ff;
 }
-.auth-form button:hover {
+.auth-form button:hover,
+.default-data-container button:hover {
   background-image: linear-gradient(#9797a0, #a0a0ffa0, #a3a3b0);
+}
+
+/* Profile-page */
+.profile-container .default-data-container .profile-data {
+  display: grid;
+  grid-template-columns: 2fr 5fr;
+  grid-template-rows: repeat(4, 1fr);
+  grid-template-areas:
+    "userName  userNameVal"
+    "email     emailVal"
+    "firstName firstNameVal"
+    "about     aboutVal";
+}
+.profile-container .default-data-container .profile-buttons {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 5fr 5fr;
+  grid-template-rows: 1fr;
+  grid-template-areas: "logoutBtn  editBtn";
+}
+.profile-container .username {
+  grid-area: userName;
+}
+.profile-container .email {
+  grid-area: email;
+}
+.profile-container .firstname {
+  grid-area: firstName;
+}
+.profile-container .about {
+  grid-area: about;
+}
+.profile-container .username-val {
+  grid-area: userNameVal;
+}
+.profile-container .email-val {
+  grid-area: emailVal;
+}
+.profile-container .firstname-val {
+  grid-area: firstNameVal;
+}
+.profile-container .about-val {
+  grid-area: aboutVal;
+}
+.profile-container .logout-btn {
+  grid-area: logoutBtn;
+}
+.profile-container .edit-btn {
+  grid-area: editBtn;
+}
+.profile-container .default-data-container button {
+  width: 100%;
 }
 
 /* Additional */
