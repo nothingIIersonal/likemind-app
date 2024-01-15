@@ -1,31 +1,17 @@
 import React, { useEffect } from "react";
-import axios from "axios";
-import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
-import { ProfileURL } from "../config/APIUrls";
 import { YMaps, Placemark, Map as YMap } from "@pbe/react-yandex-maps";
+import { AuthCheck } from "../config/AuthCheck";
 
 function Map() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    async function CheckToken() {
-      const accessToken = Cookies.get("access_token");
-
-      const headers = {
-        Authorization: accessToken,
-      };
-
-      await axios({ method: "post", url: ProfileURL, headers: headers }).catch(
-        (err) => {
-          console.log("Error occured");
-          console.log(err);
-          navigate("/login");
-        },
-      );
-    }
-
-    CheckToken();
+    AuthCheck().catch((err) => {
+      console.log("Error occured");
+      console.log(err);
+      navigate("/login");
+    });
   }, [navigate]);
 
   return (

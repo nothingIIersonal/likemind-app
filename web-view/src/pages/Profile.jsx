@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
-import { ProfileURL } from "../config/APIUrls";
+import { AuthCheck } from "../config/AuthCheck";
 
 function Profile() {
   const [username, setUsername] = useState("");
@@ -11,26 +10,16 @@ function Profile() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    async function CheckToken() {
-      const accessToken = Cookies.get("access_token");
-
-      const headers = {
-        Authorization: accessToken,
-      };
-
-      await axios({ method: "post", url: ProfileURL, headers: headers })
-        .then((resp) => {
-          setUsername(resp.data.username);
-          setEmail(resp.data.email);
-        })
-        .catch((err) => {
-          console.log("Error occured");
-          console.log(err);
-          navigate("/login");
-        });
-    }
-
-    CheckToken();
+    AuthCheck()
+      .then((resp) => {
+        setUsername(resp.data.username);
+        setEmail(resp.data.email);
+      })
+      .catch((err) => {
+        console.log("Error occured");
+        console.log(err);
+        navigate("/login");
+      });
   }, [navigate]);
 
   const handleLogout = (e) => {
