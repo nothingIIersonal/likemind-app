@@ -1,10 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { YMaps, Placemark, Map as YMap } from "@pbe/react-yandex-maps";
-import { AuthCheck } from "../config/AuthCheck";
+import { AuthCheck, GetAccessToken } from "../config/AuthCheck";
+import { RetrieveAllPlacemarksURL } from "../config/APIUrls";
 
 function Map() {
   const navigate = useNavigate();
+  const [marks, setMarks] = useState([]);
 
   useEffect(() => {
     AuthCheck().catch((err) => {
@@ -13,6 +16,34 @@ function Map() {
       navigate("/login");
     });
   }, [navigate]);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      axios({
+        method: "post",
+        url: RetrieveAllPlacemarksURL,
+        headers: {
+          Authorization: GetAccessToken(),
+        },
+      }).then((res) => {
+        setMarks(res.data.marks);
+      });
+    }, 5000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
+  let marksList = [];
+  for (let i = 0; i < marks.length; i++) {
+    marksList.push(
+      <Placemark
+        modules={["geoObject.addon.balloon"]}
+        defaultGeometry={[marks[i].lat, marks[i].lon]}
+        properties={{ balloonContentBody: marks[i].title }}
+        key={i}
+      />,
+    );
+  }
 
   return (
     <>
@@ -23,16 +54,7 @@ function Map() {
               defaultState={{ center: [55.751574, 37.573856], zoom: 9 }}
               className="ymap"
             >
-              <Placemark
-                modules={["geoObject.addon.balloon"]}
-                defaultGeometry={[55.751574, 37.573856]}
-                properties={{ balloonContentBody: "Lets party started!" }}
-              />
-              <Placemark
-                modules={["geoObject.addon.balloon"]}
-                defaultGeometry={[55.751511, 36.570857]}
-                properties={{ balloonContentBody: "Lets party started!" }}
-              />
+              {marksList}
             </YMap>
           </YMaps>
         </div>
