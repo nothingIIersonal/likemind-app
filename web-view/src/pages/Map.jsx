@@ -3,6 +3,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import { ProfileURL } from "../config/APIUrls";
+import { YMaps, Placemark, Map as YMap } from "@pbe/react-yandex-maps";
 
 function Map() {
   const navigate = useNavigate();
@@ -31,11 +32,23 @@ function Map() {
     <>
       <div className="map-container">
         <div className="default-container">
-          <iframe
-            src="https://yandex.ru/map-widget/v1/?ll=37.621055%2C55.757930&z=14.8"
-            width="100%"
-            height="100%"
-          ></iframe>
+          <YMaps query={{ apikey: process.env.REACT_APP_YMAP_KEY }}>
+            <YMap
+              defaultState={{ center: [55.751574, 37.573856], zoom: 9 }}
+              className="ymap"
+            >
+              <Placemark
+                modules={["geoObject.addon.balloon"]}
+                defaultGeometry={[55.751574, 37.573856]}
+                properties={{ balloonContentBody: "Lets party started!" }}
+              />
+              <Placemark
+                modules={["geoObject.addon.balloon"]}
+                defaultGeometry={[55.751511, 36.570857]}
+                properties={{ balloonContentBody: "Lets party started!" }}
+              />
+            </YMap>
+          </YMaps>
         </div>
       </div>
     </>

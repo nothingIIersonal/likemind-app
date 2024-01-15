@@ -6,6 +6,7 @@ services:
       - PORT=3000
       - REACT_APP_API_URL=http://localhost:3001/api/v1
       - REACT_APP_URL_FOR_CORS=http://localhost:3001
+      - REACT_APP_YMAP_KEY=7bfa29c7-6401-442b-b3ed-7e6bf2496b0e
     ports:
       - 3000:3000
     build:
