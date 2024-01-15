@@ -7,6 +7,9 @@ export default interface IUser extends RowDataPacket {
   password?: string;
   created_at?: string;
   updated_at?: string;
+  firstname?: string;
+  about?: string;
+  sex?: string;
 }
 
 export class User {
@@ -16,6 +19,9 @@ export class User {
   password?: string;
   created_at?: string;
   updated_at?: string;
+  firstname?: string;
+  about?: string;
+  sex?: string;
 
   constructor(
     id: number,
@@ -24,6 +30,9 @@ export class User {
     password: string,
     created_at: string,
     updated_at: string,
+    firstname: string,
+    about: string,
+    sex: string,
   ) {
     this.id = id;
     this.username = username;
@@ -31,5 +40,8 @@ export class User {
     this.password = password;
     this.created_at = created_at;
     this.updated_at = updated_at;
+    this.firstname = firstname;
+    this.about = about;
+    this.sex = sex;
   }
 }

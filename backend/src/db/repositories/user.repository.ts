@@ -117,8 +117,17 @@ class UserRepository implements IUserRepository {
 
     return new Promise((resolve, reject) => {
       connection.query<ResultSetHeader>(
-        'UPDATE user SET username = ?, email = ?, password = ?, updated_at = ? WHERE user_id = ?',
-        [user.username, user.email, hashedPassword, Date(), user.id],
+        'UPDATE user SET username = ?, email = ?, password = ?, updated_at = ?, firstname = ?, about = ?, sex = ? WHERE user_id = ?',
+        [
+          user.username,
+          user.email,
+          hashedPassword,
+          Date(),
+          user.firstname,
+          user.about,
+          user.sex,
+          user.id,
+        ],
         (err, res) => {
           if (err) reject(err);
           else resolve(res.affectedRows);
