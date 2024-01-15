@@ -1,6 +1,5 @@
 import {
   Controller,
-  Get,
   Post,
   UseGuards,
   Req,
@@ -12,7 +11,6 @@ import { Request, Response } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { AuthService } from '@modules/auth/auth.service';
 import { LocalAuthGuard } from '@modules/auth/local.authguard';
-import { JwtAuthGuard } from './jwt.authguard';
 
 @Controller('/auth')
 export class AuthController {
@@ -44,12 +42,5 @@ export class AuthController {
         expires: date_res,
       })
       .send({ status: 200, message: 'Successfully logged in' });
-  }
-
-  @UseGuards(JwtAuthGuard)
-  @Get('/getCurrentUser')
-  @UseInterceptors(FileInterceptor(''))
-  async getCurrentUser(@Req() req: Request) {
-    return req.user;
   }
 }
