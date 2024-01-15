@@ -117,7 +117,7 @@ class UserRepository implements IUserRepository {
 
     return new Promise((resolve, reject) => {
       connection.query<ResultSetHeader>(
-        'UPDATE user SET username = ?, email = ?, password = ?, updated_at = ?, firstname = ?, about = ?, sex = ? WHERE user_id = ?',
+        'UPDATE users SET username = ?, email = ?, password = ?, updated_at = ?, firstname = ?, about = ?, sex = ? WHERE user_id = ?',
         [
           user.username,
           user.email,
@@ -139,7 +139,7 @@ class UserRepository implements IUserRepository {
   delete(userId: number): Promise<number> {
     return new Promise((resolve, reject) => {
       connection.query<ResultSetHeader>(
-        'DELETE FROM user WHERE user_id = ?',
+        'DELETE FROM users WHERE user_id = ?',
         [userId],
         (err, res) => {
           if (err) reject(err);
