@@ -118,13 +118,16 @@ main {
 /* Profile-page */
 .profile-container .default-data-container .profile-data {
   display: grid;
-  grid-template-columns: 2fr 5fr;
-  grid-template-rows: repeat(4, 1fr);
+  grid-template-columns: 2fr 1fr 5fr;
+  grid-auto-rows: auto;
   grid-template-areas:
-    "userName  userNameVal"
-    "email     emailVal"
-    "firstName firstNameVal"
-    "about     aboutVal";
+    "userName   .  userNameVal"
+    "email      .  emailVal"
+    "firstName  .  firstNameVal"
+    "about      .  aboutVal"
+    "sex        .  sexVal"
+    "createdAt  .  createdAtVal"
+    "updatedAt  .  updatedAtVal";
 }
 .profile-container .default-data-container .profile-buttons {
   display: grid;
@@ -145,6 +148,15 @@ main {
 .profile-container .about {
   grid-area: about;
 }
+.profile-container .sex {
+  grid-area: sex;
+}
+.profile-container .created-at {
+  grid-area: createdAt;
+}
+.profile-container .updated-at {
+  grid-area: updatedAt;
+}
 .profile-container .username-val {
   grid-area: userNameVal;
 }
@@ -156,6 +168,15 @@ main {
 }
 .profile-container .about-val {
   grid-area: aboutVal;
+}
+.profile-container .sex-val {
+  grid-area: sexVal;
+}
+.profile-container .created-at-val {
+  grid-area: createdAtVal;
+}
+.profile-container .updated-at-val {
+  grid-area: updatedAtVal;
 }
 .profile-container .logout-btn {
   grid-area: logoutBtn;
