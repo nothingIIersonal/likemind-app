@@ -17,13 +17,13 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     const username = payload.username;
     const email = payload.sub;
 
-    if (
-      !UserRepository.existsByUsername(username) ||
-      !UserRepository.existsByEmail(email)
-    ) {
+    const user = await UserRepository.existsByUsername(username);
+    if (!user || !UserRepository.existsByEmail(email)) {
       throw new UnauthorizedException("Profile doesn't exists");
     }
 
-    return { username: payload.username, email: payload.sub };
+    const { password, ...result } = user;
+
+    return result;
   }
 }
