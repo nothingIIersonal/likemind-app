@@ -134,7 +134,7 @@ main {
   gap: 1rem;
   grid-template-columns: 5fr 5fr;
   grid-template-rows: 1fr;
-  grid-template-areas: "logoutBtn  editBtn";
+  grid-template-areas: "leftBtn  rightBtn";
 }
 .profile-container .username {
   grid-area: userName;
@@ -178,13 +178,21 @@ main {
 .profile-container .updated-at-val {
   grid-area: updatedAtVal;
 }
-.profile-container .logout-btn {
-  grid-area: logoutBtn;
+.profile-container .logout-btn,
+.profile-container .change-password-btn {
+  grid-area: leftBtn;
 }
-.profile-container .edit-btn {
-  grid-area: editBtn;
+.profile-container .edit-btn,
+.profile-container .save-btn {
+  grid-area: rightBtn;
 }
 .profile-container .default-data-container button {
+  width: 100%;
+}
+.profile-container .default-data-container .profile-data input {
+  width: 100%;
+}
+.profile-container .default-data-container .profile-data select {
   width: 100%;
 }
 

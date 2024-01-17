@@ -12,7 +12,8 @@ interface IUserRepository {
   retrieveById(userId: number): Promise<IUser | undefined>;
   retrieveByUsername(username: string): Promise<IUser | undefined>;
   retrieveByEmail(email: string): Promise<IUser | undefined>;
-  update(user: User): Promise<number>;
+  updatePassword(user: User): Promise<number>;
+  updateProfile(user: User): Promise<number>;
   delete(userId: number): Promise<number>;
   deleteAll(): Promise<number>;
 
@@ -112,27 +113,47 @@ class UserRepository implements IUserRepository {
     });
   }
 
-  update(user: User): Promise<number> {
+  updatePassword(user: User): Promise<number> {
     const hashedPassword = hashSync(user.password, genSaltSync(10));
 
     return new Promise((resolve, reject) => {
       connection.query<ResultSetHeader>(
-        'UPDATE users SET username = ?, email = ?, password = ?, updated_at = ?, firstname = ?, about = ?, sex = ? WHERE user_id = ?',
-        [
-          user.username,
-          user.email,
-          hashedPassword,
-          Date(),
-          user.firstname,
-          user.about,
-          user.sex,
-          user.id,
-        ],
+        'UPDATE users SET password = ?, updated_at = NOW() WHERE user_id = ?',
+        [hashedPassword, user.id],
         (err, res) => {
           if (err) reject(err);
           else resolve(res.affectedRows);
         },
       );
+    });
+  }
+
+  updateProfile(user: User): Promise<number> {
+    return new Promise((resolve, reject) => {
+      let upd_query = `UPDATE users SET updated_at = NOW()`;
+
+      if (user.username) {
+        upd_query += `, username = '${user.username}'`;
+      }
+      if (user.email) {
+        upd_query += `, email = '${user.email}'`;
+      }
+      if (user.firstname) {
+        upd_query += `, firstname = '${user.firstname}'`;
+      }
+      if (user.about) {
+        upd_query += `, about = '${user.about}'`;
+      }
+      if (user.sex) {
+        upd_query += `, sex = '${user.sex}'`;
+      }
+
+      upd_query += ` WHERE user_id = ${user.id}`;
+
+      connection.query<ResultSetHeader>(upd_query, (err, res) => {
+        if (err) reject(err);
+        else resolve(res.affectedRows);
+      });
     });
   }
 
@@ -167,8 +188,8 @@ class UserRepository implements IUserRepository {
         else if (res && res[0])
           this.retrieveByUsername(res[0].username)
             .then((user) => resolve(user!))
-            .catch(() => reject(undefined));
-        else reject(undefined);
+            .catch(() => resolve(undefined));
+        else resolve(undefined);
       });
     });
   }
@@ -182,8 +203,8 @@ class UserRepository implements IUserRepository {
         else if (res && res[0])
           this.retrieveByEmail(res[0].email)
             .then((user) => resolve(user!))
-            .catch(() => reject(undefined));
-        else reject(undefined);
+            .catch(() => resolve(undefined));
+        else resolve(undefined);
       });
     });
   }
