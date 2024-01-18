@@ -97,7 +97,7 @@ function Profile() {
         email: emailUpd,
         firstname: firstnameUpd,
         about: aboutUpd,
-        sex: sexUpd,
+        sex: sexUpd === "" ? "-" : sexUpd,
       },
     };
 
@@ -185,7 +185,7 @@ function Profile() {
                 editable={true}
                 defaultValue={sex}
                 updValue={sexUpd}
-                options={["m", "f"]}
+                options={["-", "m", "f"]}
                 updCallback={setSexUpdCallback}
               />
               <DataFieldText

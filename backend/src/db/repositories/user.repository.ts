@@ -144,8 +144,9 @@ class UserRepository implements IUserRepository {
       if (user.about) {
         upd_query += `, about = '${user.about}'`;
       }
-      if (user.sex) {
-        upd_query += `, sex = '${user.sex}'`;
+      if (user.sex !== undefined) {
+        // because the sex can be set to NULL or not changed at all.
+        upd_query += !user.sex ? ', sex = NULL' : `, sex = '${user.sex}'`;
       }
 
       upd_query += ` WHERE user_id = ${user.id}`;

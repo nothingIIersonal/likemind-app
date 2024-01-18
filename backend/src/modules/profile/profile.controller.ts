@@ -71,6 +71,11 @@ export class ProfileController {
     user.firstname = req.body.new_user.firstname;
     user.about = req.body.new_user.about;
     user.sex = req.body.new_user.sex;
+    if (user.sex !== 'm' && user.sex !== 'f' && user.sex !== '-') {
+      throw new BadRequestException('Invalid sex value');
+    }
+
+    user.sex = user.sex === '-' ? null : user.sex;
 
     try {
       const resp = await this.profileService.updateProfile(user);
