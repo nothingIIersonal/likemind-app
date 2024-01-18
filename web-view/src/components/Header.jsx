@@ -1,9 +1,11 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-function Header() {
+function Header(props) {
   const setActive = ({ isActive }) =>
     isActive ? "link-click-active" : "link-click";
+
+  const authorized = props.authorized;
 
   return (
     <>
@@ -15,12 +17,20 @@ function Header() {
             </NavLink>
           </span>
           <span className="right-span">
-            <NavLink to="/login" className={setActive}>
-              LogIn
-            </NavLink>
-            <NavLink to="/register" className={setActive}>
-              Register
-            </NavLink>
+            {authorized ? (
+              <></>
+            ) : (
+              <NavLink to="/login" className={setActive}>
+                LogIn
+              </NavLink>
+            )}
+            {authorized ? (
+              <></>
+            ) : (
+              <NavLink to="/register" className={setActive}>
+                Register
+              </NavLink>
+            )}
             <NavLink to="/profile" className={setActive}>
               Profile
             </NavLink>

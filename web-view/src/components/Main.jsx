@@ -13,6 +13,8 @@ function Main() {
   const [createdAt, setCreatedAt] = useState("");
   const [updatedAt, setUpdatedAt] = useState("");
 
+  const [authorized, setAuthorized] = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,6 +28,8 @@ function Main() {
         setCreatedAt(new Date(resp.data.created_at).toLocaleString());
         setUpdatedAt(new Date(resp.data.updated_at).toLocaleString());
 
+        setAuthorized(true);
+
         if (
           window.location.pathname === "/login" ||
           window.location.pathname === "/register"
@@ -36,6 +40,8 @@ function Main() {
       .catch((err) => {
         console.log("Error occured");
         console.log(err);
+
+        setAuthorized(false);
 
         if (
           window.location.pathname !== "/login" &&
@@ -48,7 +54,7 @@ function Main() {
 
   return (
     <div className="App">
-      <Header />
+      <Header authorized={authorized} />
       <main className="main">
         <Outlet
           context={{
@@ -66,6 +72,7 @@ function Main() {
             setCreatedAt: setCreatedAt,
             updatedAt: updatedAt,
             setUpdatedAt: setUpdatedAt,
+            authorized: authorized,
           }}
         />
       </main>
