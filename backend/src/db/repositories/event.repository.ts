@@ -52,12 +52,11 @@ class EventRepository implements IEventRepository {
   update(event: Event): Promise<number> {
     return new Promise((resolve, reject) => {
       connection.query<ResultSetHeader>(
-        'UPDATE events SET title = ?, lat = ?, lon = ?, updated_at = ?, limited = ?, max_members = ?, description = ? WHERE event_id = ?',
+        'UPDATE events SET title = ?, lat = ?, lon = ?, updated_at = NOW(), limited = ?, max_members = ?, description = ? WHERE event_id = ?',
         [
           event.title,
           event.lat,
           event.lon,
-          Date(),
           event.limited,
           event.max_members,
           event.description,
