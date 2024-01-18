@@ -13,7 +13,7 @@ export class MapService {
       });
 
     if (!data) {
-      return null;
+      return { status: 500, message: "Can't retrieve placemarks" };
     }
 
     const marks = [];
