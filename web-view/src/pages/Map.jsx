@@ -1,21 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { YMaps, Placemark, Map as YMap } from "@pbe/react-yandex-maps";
-import { AuthCheck, GetAccessToken } from "../config/AuthCheck";
+import { GetAccessToken } from "../config/AuthCheck";
 import { RetrieveAllPlacemarksURL } from "../config/APIUrls";
 
 function Map() {
-  const navigate = useNavigate();
   const [marks, setMarks] = useState([]);
-
-  useEffect(() => {
-    AuthCheck().catch((err) => {
-      console.log("Error occured");
-      console.log(err);
-      navigate("/login");
-    });
-  }, [navigate]);
 
   useEffect(() => {
     const intervalId = setInterval(() => {

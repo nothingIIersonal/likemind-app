@@ -1,20 +1,29 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Cookies from "js-cookie";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { AuthCheck, GetAccessToken } from "../config/AuthCheck";
+import { useNavigate, useOutletContext } from "react-router-dom";
+import { GetAccessToken } from "../config/AuthCheck";
 import { DataFieldText, DataFieldDDL } from "../components/DataComponents";
 import { ErrorSection } from "../components/ErrorSection";
 import { UpdateProfileURL } from "../config/APIUrls";
 
 function Profile() {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [firstname, setFirstname] = useState("");
-  const [about, setAbout] = useState("");
-  const [sex, setSex] = useState("");
-  const [createdAt, setCreatedAt] = useState("");
-  const [updatedAt, setUpdatedAt] = useState("");
+  const {
+    username: username,
+    setUsername: setUsername,
+    email: email,
+    setEmail: setEmail,
+    firstname: firstname,
+    setFirstname: setFirstname,
+    about: about,
+    setAbout: setAbout,
+    sex: sex,
+    setSex: setSex,
+    createdAt: createdAt,
+    setCreatedAt: setCreatedAt,
+    updatedAt: updatedAt,
+    setUpdatedAt: setUpdatedAt,
+  } = useOutletContext();
 
   const [usernameUpd, setUsernameUpd] = useState("");
   const [emailUpd, setEmailUpd] = useState("");
@@ -44,24 +53,6 @@ function Profile() {
   const [editMode, setEditMode] = useState(false);
 
   const navigate = useNavigate();
-
-  useEffect(() => {
-    AuthCheck()
-      .then((resp) => {
-        setUsername(resp.data.username);
-        setEmail(resp.data.email);
-        setFirstname(resp.data.firstname ? resp.data.firstname : "");
-        setAbout(resp.data.about ? resp.data.about : "");
-        setSex(resp.data.sex ? resp.data.sex : "");
-        setCreatedAt(new Date(resp.data.created_at).toLocaleString());
-        setUpdatedAt(new Date(resp.data.updated_at).toLocaleString());
-      })
-      .catch((err) => {
-        console.log("Error occured");
-        console.log(err);
-        navigate("/login");
-      });
-  }, [navigate]);
 
   const handleLogout = async (e) => {
     e.preventDefault();
