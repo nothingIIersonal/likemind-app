@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ErrorSection } from "../components/ErrorSection";
 import { RegisterURL } from "../config/APIUrls";
+import { AuthCheck } from "../config/AuthCheck";
 
 function Register() {
   const [username, setUsername] = useState("");
@@ -12,6 +13,17 @@ function Register() {
   const [errorHidden, setErrorHidden] = useState(true);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    AuthCheck()
+      .then(() => {
+        navigate("/profile");
+      })
+      .catch((err) => {
+        console.log("Error occured");
+        console.log(err);
+      });
+  }, [navigate]);
 
   const handleRegister = async (e) => {
     e.preventDefault();

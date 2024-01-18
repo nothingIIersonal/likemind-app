@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { ErrorSection } from "../components/ErrorSection";
 import { AuthLoginURL } from "../config/APIUrls";
 import { useNavigate } from "react-router-dom";
+import { AuthCheck } from "../config/AuthCheck";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -12,6 +13,17 @@ function Login() {
   const [errorHidden, setErrorHidden] = useState(true);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    AuthCheck()
+      .then(() => {
+        navigate("/profile");
+      })
+      .catch((err) => {
+        console.log("Error occured");
+        console.log(err);
+      });
+  }, [navigate]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
